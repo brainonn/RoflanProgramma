@@ -42,9 +42,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     connect(serial,SIGNAL(readyRead()),this,SLOT(getResponse()));
-    connect(this,SIGNAL(updatePlot(double,double)),this, SLOT(onUpdatePlot(double,double)));
-    connect(ui->plot, SIGNAL(mouseMove(QMouseEvent*)),this,SLOT(onMouseMove(QMouseEvent*)));
-    connect(ui->derPlot, SIGNAL(mouseMove(QMouseEvent*)),this,SLOT(onMouseMove(QMouseEvent*)));
+    connect(this,SIGNAL(updatePlot(double,double)),this, SLOT(on_updatePlot(double,double)));
+    connect(ui->plot, SIGNAL(mouseMove(QMouseEvent*)),this,SLOT(on_mouseMove(QMouseEvent*)));
+    connect(ui->derPlot, SIGNAL(mouseMove(QMouseEvent*)),this,SLOT(on_mouseMove(QMouseEvent*)));
 }
 
 MainWindow::~MainWindow()
