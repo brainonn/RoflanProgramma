@@ -1,6 +1,6 @@
 #include "comsettings.h"
 #include "ui_comsettings.h"
-#include "mainwindow.h"
+
 
 COMSettings::COMSettings(QWidget *parent) :
     QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint | Qt::WindowCloseButtonHint),

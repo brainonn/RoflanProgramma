@@ -4,9 +4,15 @@
 #include <QMainWindow>
 #include <QSerialPort>
 #include <QSerialPortInfo>
-#include <QTime>
 #include <QDebug>
 #include <QLabel>
+#include <QElapsedTimer>
+#include <QTimer>
+#include <QSignalBlocker>
+#include "qcustomplot.h"
+#include "comsettings.h"
+#include "piercestat.h"
+#include "piercestatsettings.h"
 
 
 namespace Ui {
@@ -17,50 +23,69 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
+protected:
+    bool eventFilter(QObject *target, QEvent *event);
+public:
+    explicit MainWindow(QWidget *parent = nullptr);
+    ~MainWindow();
+    void setCOMBaudRate(int);
+    void setCOMDataBits(QSerialPort::DataBits);
+    void setCOMParity(QSerialPort::Parity);
+    void setCOMPortName(QString);
+    int getCOMBaudRate() const;
+    QSerialPort::DataBits getCOMDataBits() const;
+    QSerialPort::Parity getCOMParity() const;
+private slots:
+    void on_actionCOMUPD_triggered(); // Обновление списка портов
+    void on_actionExport_triggered();
+    void on_actionFixPlot_triggered();
+    void on_actionCOMSettings_triggered();
+    void on_actionPierceStatSettings_triggered();
+    void on_pushButtonAction_clicked(); // Подключение и отключение
+    void on_channelEnable();
+    void on_channelLoadChanged(int);
+    void on_channelModeChanged(int);
+    void on_channelSourceChanged(int);
+    void on_channelSetpointChanged(double);
+    void on_channelPChanged(double);
+    void on_channelIChanged(double);
+    void on_channelDChanged(double);
+    void on_updatePlots(QVector<double>&);
+    void on_mouseMove(QMouseEvent*);
+    void on_checkBoxShowDer_stateChanged(int);
+    void on_checkBoxPlotTemperature_stateChanged(int);
+    void getReadings();
+    void on_updateMeasurements(QVector<double>&);
+
+signals:
+    void updatePlot(QVector<double>&) const;
+    void updateMeasurements(QVector<double>&) const;
+
 private:
-    QByteArray buffer;
-    QSerialPort *serial; // SerialPort
-    int baud = QSerialPort::Baud115200;
-    QSerialPort::DataBits dataBits = QSerialPort::Data8;
-    QSerialPort::Parity parity = QSerialPort::NoParity;
+    Ui::MainWindow *ui; // Пользовательский интерфейс
+    QElapsedTimer *elapsedTimer;
+    QTimer *timer;
     QLabel *fixedPlotLabel;
     QLabel *plotCoordinatesLabel;
+    PierceStat *pierceStat;
+    QStringList channelModes;
+    QStringList channelLoads;
+    QStringList channelSources;
+    QVector<QCustomPlot*> plots;
+    QVector<QLabel*> plotLabels;
+    QVector<QVector<double>>* channelSourcesValues; //0 - 3 temps, 4 - freq
     QVector<double> times;
-    QVector<double> freqs;
-    QVector<double> der;
+    QVector<double> freqDer;
+
+
+
     double freqMax;
     double freqMin;
     double prevTime;
     double prevFreq;
     int timeScale;
     bool fixedPlot;
-protected:
-    bool eventFilter(QObject *target, QEvent *event);
-public:
-    explicit MainWindow(QWidget *parent = nullptr); // Конструктор класса
-    ~MainWindow(); // Деструктор класса
-    void setCOMBaudRate(int);
-    void setCOMDataBits(QSerialPort::DataBits);
-    void setCOMParity(QSerialPort::Parity);
-    int getCOMBaudRate();
-    QSerialPort::DataBits getCOMDataBits();
-    QSerialPort::Parity getCOMParity();
-private slots:
-    void on_actionCOMUPD_triggered(); // Обновление списка портов
-    void on_actionExport_triggered();
-    void on_actionFixPlot_triggered();
-    void on_actionCOMSettings_triggered();
-    void getResponse();
-    void on_pushButtonAction_clicked(); // Подключение и отключение
-    void on_updatePlot(double, double);
-    void on_mouseMove(QMouseEvent*);
-    void on_checkBoxShowDer_stateChanged(int);
-
-signals:
-    void updatePlot(double, double) const;
-
-private:
-    Ui::MainWindow *ui; // Пользовательский интерфейс
+    int pollingInterval;
 };
 
 #endif // MAINWINDOW_H

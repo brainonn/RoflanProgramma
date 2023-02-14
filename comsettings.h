@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QSerialPort>
+#include "mainwindow.h"
 
 namespace Ui {
 class COMSettings;

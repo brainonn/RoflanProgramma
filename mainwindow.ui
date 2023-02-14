@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1121</width>
-    <height>654</height>
+    <width>1137</width>
+    <height>1067</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QVBoxLayout" name="verticalLayout_3">
-    <item>
+   <layout class="QGridLayout" name="gridLayout_4">
+    <item row="0" column="0">
      <layout class="QGridLayout" name="gridLayout">
       <item row="0" column="0">
-       <widget class="QLabel" name="label">
+       <widget class="QLabel" name="labelCOM">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -55,8 +55,319 @@
       </item>
      </layout>
     </item>
-    <item>
-     <widget class="QGroupBox" name="frequencyGroupBox">
+    <item row="1" column="0">
+     <widget class="QGroupBox" name="groupBoxPierceStat">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="title">
+       <string>PierceStat™ </string>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="0" column="0">
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <item>
+          <widget class="QLabel" name="labelTemperature">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>Temperature: </string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCustomPlot" name="plotTemp" native="true">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>50</horstretch>
+             <verstretch>50</verstretch>
+            </sizepolicy>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="0" column="1">
+        <layout class="QFormLayout" name="formLayout_3">
+         <property name="fieldGrowthPolicy">
+          <enum>QFormLayout::FieldsStayAtSizeHint</enum>
+         </property>
+         <item row="1" column="0">
+          <widget class="QLabel" name="labelHeaterVoltage">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>Heater voltage</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLCDNumber" name="lcdHeaterVoltage">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QGroupBox" name="groupBoxCh1">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="title">
+            <string>Channel 1</string>
+           </property>
+           <layout class="QFormLayout" name="formLayout">
+            <property name="fieldGrowthPolicy">
+             <enum>QFormLayout::ExpandingFieldsGrow</enum>
+            </property>
+            <item row="0" column="0">
+             <widget class="QLabel" name="labelCh1Load">
+              <property name="text">
+               <string>Load</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QComboBox" name="comboBoxCh1Load"/>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="labelCh1Mode">
+              <property name="text">
+               <string>Mode</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QComboBox" name="comboBoxCh1Mode"/>
+            </item>
+            <item row="4" column="0">
+             <widget class="QLabel" name="labelCh1Source">
+              <property name="text">
+               <string>Source</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="1">
+             <widget class="QComboBox" name="comboBoxCh1Source"/>
+            </item>
+            <item row="6" column="0">
+             <widget class="QLabel" name="labelCh1Setpoint">
+              <property name="text">
+               <string>Setpoint</string>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="1">
+             <widget class="QDoubleSpinBox" name="doubleSpinBoxCh1Setpoint"/>
+            </item>
+            <item row="8" column="0">
+             <widget class="QLabel" name="labelCh1P">
+              <property name="text">
+               <string>P</string>
+              </property>
+             </widget>
+            </item>
+            <item row="8" column="1">
+             <widget class="QDoubleSpinBox" name="doubleSpinBoxCh1P"/>
+            </item>
+            <item row="10" column="0">
+             <widget class="QLabel" name="labelCh1I">
+              <property name="text">
+               <string>I</string>
+              </property>
+             </widget>
+            </item>
+            <item row="10" column="1">
+             <widget class="QDoubleSpinBox" name="doubleSpinBoxCh1I"/>
+            </item>
+            <item row="12" column="0">
+             <widget class="QLabel" name="labelCh1D">
+              <property name="text">
+               <string>D</string>
+              </property>
+             </widget>
+            </item>
+            <item row="12" column="1">
+             <widget class="QDoubleSpinBox" name="doubleSpinBoxCh1D"/>
+            </item>
+            <item row="14" column="0" colspan="2">
+             <widget class="QPushButton" name="pushButtonCh1Enable">
+              <property name="text">
+               <string>Enable</string>
+              </property>
+             </widget>
+            </item>
+            <item row="16" column="0">
+             <widget class="QLabel" name="labelCh1Current">
+              <property name="text">
+               <string>Current</string>
+              </property>
+             </widget>
+            </item>
+            <item row="16" column="1">
+             <widget class="QLCDNumber" name="lcdCh1Current"/>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QGroupBox" name="groupBoxCh2">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="title">
+            <string>Channel 2</string>
+           </property>
+           <layout class="QFormLayout" name="formLayout_2">
+            <property name="fieldGrowthPolicy">
+             <enum>QFormLayout::ExpandingFieldsGrow</enum>
+            </property>
+            <item row="0" column="0">
+             <widget class="QLabel" name="labelCh2Load">
+              <property name="text">
+               <string>Load</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QComboBox" name="comboBoxCh2Load"/>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="labelCh2Mode">
+              <property name="text">
+               <string>Mode</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QComboBox" name="comboBoxCh2Mode"/>
+            </item>
+            <item row="4" column="0">
+             <widget class="QLabel" name="labelCh2Source">
+              <property name="text">
+               <string>Source</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="1">
+             <widget class="QComboBox" name="comboBoxCh2Source"/>
+            </item>
+            <item row="6" column="0">
+             <widget class="QLabel" name="labelCh2Setpoint">
+              <property name="text">
+               <string>Setpoint</string>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="1">
+             <widget class="QDoubleSpinBox" name="doubleSpinBoxCh2Setpoint"/>
+            </item>
+            <item row="8" column="0">
+             <widget class="QLabel" name="labelCh2P">
+              <property name="text">
+               <string>P</string>
+              </property>
+             </widget>
+            </item>
+            <item row="8" column="1">
+             <widget class="QDoubleSpinBox" name="doubleSpinBoxCh2P"/>
+            </item>
+            <item row="10" column="0">
+             <widget class="QLabel" name="labelCh2I">
+              <property name="text">
+               <string>I</string>
+              </property>
+             </widget>
+            </item>
+            <item row="10" column="1">
+             <widget class="QDoubleSpinBox" name="doubleSpinBoxCh2I"/>
+            </item>
+            <item row="12" column="0">
+             <widget class="QLabel" name="labelCh2D">
+              <property name="text">
+               <string>D</string>
+              </property>
+             </widget>
+            </item>
+            <item row="12" column="1">
+             <widget class="QDoubleSpinBox" name="doubleSpinBoxCh2D"/>
+            </item>
+            <item row="14" column="0" colspan="2">
+             <widget class="QPushButton" name="pushButtonCh2Enable">
+              <property name="text">
+               <string>Enable</string>
+              </property>
+             </widget>
+            </item>
+            <item row="15" column="0">
+             <widget class="QLabel" name="labelCh2Current">
+              <property name="text">
+               <string>Current</string>
+              </property>
+             </widget>
+            </item>
+            <item row="15" column="1">
+             <widget class="QLCDNumber" name="lcdCh2Current"/>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QCheckBox" name="checkBoxPlotTemperature">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>Plot Temperature</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QComboBox" name="comboBoxPlotTemp"/>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="labelChannelsCoop">
+           <property name="text">
+            <string>Channels mode</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QComboBox" name="comboBoxChannelsCoop"/>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QGroupBox" name="groupBoxFrequency">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
         <horstretch>0</horstretch>
@@ -83,9 +394,9 @@
           </widget>
          </item>
          <item>
-          <widget class="QCustomPlot" name="plot" native="true">
+          <widget class="QCustomPlot" name="plotFreq" native="true">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
@@ -119,9 +430,9 @@
           </widget>
          </item>
          <item>
-          <widget class="QCustomPlot" name="derPlot" native="true">
+          <widget class="QCustomPlot" name="plotDer" native="true">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
@@ -156,7 +467,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1121</width>
+     <width>1137</width>
      <height>26</height>
     </rect>
    </property>
@@ -168,6 +479,7 @@
     <addaction name="actionExport"/>
     <addaction name="actionFixPlot"/>
     <addaction name="actionCOMSettings"/>
+    <addaction name="actionPierceStatSettings"/>
    </widget>
    <addaction name="menuOptions"/>
   </widget>
@@ -236,6 +548,14 @@
   <action name="actionCOMSettings">
    <property name="text">
     <string>COM Settings...</string>
+   </property>
+  </action>
+  <action name="actionPierceStatSettings">
+   <property name="text">
+    <string>PierceStat™ control...</string>
+   </property>
+   <property name="iconText">
+    <string>PierceStat &lt;sup&gt;TM&lt;/sup&gt;</string>
    </property>
   </action>
  </widget>
