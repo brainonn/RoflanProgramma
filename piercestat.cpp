@@ -197,15 +197,15 @@ AbstractParameter* PierceStat::getStoredParameter(QString parameterName)
 
 QString PierceStat::getResponse()
 {
-    int numRead = 0;
     QByteArray buffer;
-    char receive[32];
-    for(;;) {
-        numRead = serial->read(receive, 32);
-        if (numRead == 0 && !serial->waitForReadyRead(100)) {
-            break;
-        } else {
+    char receive;
+    if(serial->waitForReadyRead(100)) {
+        while(serial->bytesAvailable() > 0) {
+            serial->read(&receive, 1);
             buffer.append(receive);
+            if(receive == '\n') {
+                break;
+            }
         }
     }
 

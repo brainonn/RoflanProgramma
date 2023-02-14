@@ -30,12 +30,15 @@ SOURCES += main.cpp\
     comsettings.cpp \
         mainwindow.cpp \
     piercestat.cpp \
+    piercestatsettings.cpp \
     qcustomplot.cpp
 
 HEADERS  += mainwindow.h \
     comsettings.h \
     piercestat.h \
+    piercestatsettings.h \
     qcustomplot.h
 
 FORMS    += mainwindow.ui \
-    comsettings.ui
+    comsettings.ui \
+    piercestatsettings.ui

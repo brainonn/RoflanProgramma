@@ -40,7 +40,7 @@ MainWindow::MainWindow(QWidget *parent) :
     prevTime = 0;
     prevFreq = 0;
     fixedPlot = false;
-    pollingInterval = 1000;
+    pollingInterval = 100;
     timeScale = 1000;
     channelLoads = QStringList({"Resistor", "Peltier"});
     channelModes = QStringList({"PID", "Constant Current"});
@@ -68,23 +68,23 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     connect(timer,SIGNAL(timeout()),this,SLOT(getReadings()));
-    //connect(this,SIGNAL(updatePlot(QVector<double>&)),this, SLOT(on_updatePlots(QVector<double>&)));
-    connect(ui->pushButtonCh1Enable, SIGNAL(clicked()), this, SLOT(on_channelEnable()));
-    connect(ui->pushButtonCh1Enable, SIGNAL(clicked()), this, SLOT(on_channelEnable()));
-    connect(ui->comboBoxCh1Load, SIGNAL(currentIndexChanged(int)), this, SLOT(on_channelLoadChanged(int)));
-    connect(ui->comboBoxCh2Load, SIGNAL(currentIndexChanged(int)), this, SLOT(on_channelLoadChanged(int)));
-    connect(ui->comboBoxCh1Mode, SIGNAL(currentIndexChanged(int)), this, SLOT(on_channelModeChanged(int)));
-    connect(ui->comboBoxCh2Mode, SIGNAL(currentIndexChanged(int)), this, SLOT(on_channelModeChanged(int)));
-    connect(ui->comboBoxCh1Source, SIGNAL(currentIndexChanged(int)), this, SLOT(on_channelSourceChanged(int)));
-    connect(ui->comboBoxCh2Source, SIGNAL(currentIndexChanged(int)), this, SLOT(on_channelSourceChanged(int)));
-    connect(ui->doubleSpinBoxCh1Setpoint, SIGNAL(valueChanged(double)), this, SLOT(on_channelSetpointChanged(double)));
-    connect(ui->doubleSpinBoxCh2Setpoint, SIGNAL(valueChanged(double)), this, SLOT(on_channelSetpointChanged(double)));
-    connect(ui->doubleSpinBoxCh1P, SIGNAL(valueChanged(double)), this, SLOT(on_channelPChanged(double)));
-    connect(ui->doubleSpinBoxCh2P, SIGNAL(valueChanged(double)), this, SLOT(on_channelPChanged(double)));
-    connect(ui->doubleSpinBoxCh1I, SIGNAL(valueChanged(double)), this, SLOT(on_channelIChanged(double)));
-    connect(ui->doubleSpinBoxCh2I, SIGNAL(valueChanged(double)), this, SLOT(on_channelIChanged(double)));
-    connect(ui->doubleSpinBoxCh1D, SIGNAL(valueChanged(double)), this, SLOT(on_channelDChanged(double)));
-    connect(ui->doubleSpinBoxCh2D, SIGNAL(valueChanged(double)), this, SLOT(on_channelDChanged(double)));
+    connect(this,SIGNAL(updatePlots(QVector<double>&)),this, SLOT(on_updatePlots(QVector<double>&)));
+    //connect(ui->pushButtonCh1Enable, SIGNAL(clicked()), this, SLOT(on_channelEnable()));
+    //connect(ui->pushButtonCh1Enable, SIGNAL(clicked()), this, SLOT(on_channelEnable()));
+    //connect(ui->comboBoxCh1Load, SIGNAL(currentIndexChanged(int)), this, SLOT(on_channelLoadChanged(int)));
+    //connect(ui->comboBoxCh2Load, SIGNAL(currentIndexChanged(int)), this, SLOT(on_channelLoadChanged(int)));
+    //connect(ui->comboBoxCh1Mode, SIGNAL(currentIndexChanged(int)), this, SLOT(on_channelModeChanged(int)));
+    //connect(ui->comboBoxCh2Mode, SIGNAL(currentIndexChanged(int)), this, SLOT(on_channelModeChanged(int)));
+    //connect(ui->comboBoxCh1Source, SIGNAL(currentIndexChanged(int)), this, SLOT(on_channelSourceChanged(int)));
+    //connect(ui->comboBoxCh2Source, SIGNAL(currentIndexChanged(int)), this, SLOT(on_channelSourceChanged(int)));
+    //connect(ui->doubleSpinBoxCh1Setpoint, SIGNAL(valueChanged(double)), this, SLOT(on_channelSetpointChanged(double)));
+    //connect(ui->doubleSpinBoxCh2Setpoint, SIGNAL(valueChanged(double)), this, SLOT(on_channelSetpointChanged(double)));
+    //connect(ui->doubleSpinBoxCh1P, SIGNAL(valueChanged(double)), this, SLOT(on_channelPChanged(double)));
+    //connect(ui->doubleSpinBoxCh2P, SIGNAL(valueChanged(double)), this, SLOT(on_channelPChanged(double)));
+    //connect(ui->doubleSpinBoxCh1I, SIGNAL(valueChanged(double)), this, SLOT(on_channelIChanged(double)));
+    //connect(ui->doubleSpinBoxCh2I, SIGNAL(valueChanged(double)), this, SLOT(on_channelIChanged(double)));
+    //connect(ui->doubleSpinBoxCh1D, SIGNAL(valueChanged(double)), this, SLOT(on_channelDChanged(double)));
+    //connect(ui->doubleSpinBoxCh2D, SIGNAL(valueChanged(double)), this, SLOT(on_channelDChanged(double)));
     foreach(QCustomPlot* p, plots) {
         connect(p, SIGNAL(mouseMove(QMouseEvent*)), this, SLOT(on_mouseMove(QMouseEvent*)));
     }
@@ -102,21 +102,21 @@ MainWindow::~MainWindow()
 
 void MainWindow::getReadings()
 {
-    /*QVector<double> res;
+    QVector<double> res;
     for(int i = 0; i < 4; i++) {
         res.append(static_cast<Parameter<double>*>(pierceStat->getParameter(QString("Temp%1").arg(i + 1)))->getValue());
     }
     res.append(static_cast<Parameter<double>*>(pierceStat->getParameter("Frequency"))->getValue());
 
-    emit updatePlot(res);
+    emit updatePlots(res);
 
     QVector<double> meas;
 
     meas.append(static_cast<Parameter<double>*>(pierceStat->getParameter("Meas. Heater Voltage"))->getValue());
-    emit updateMeasurements(meas);*/
+    emit updateMeasurements(meas);
 
-    ui->labelTemperature->setText(QString::number(static_cast<Parameter<double>*>(pierceStat->getParameter("Frequency"))->getValue()));
-
+    //double temp = static_cast<Parameter<double>*>(pierceStat->getParameter("Temp1"))->getValue();
+    //ui->labelTemperature->setText(QString::number(temp));
 
     return;
 }

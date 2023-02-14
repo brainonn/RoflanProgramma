@@ -58,7 +58,7 @@ private slots:
     void on_updateMeasurements(QVector<double>&);
 
 signals:
-    void updatePlot(QVector<double>&) const;
+    void updatePlots(QVector<double>&) const;
     void updateMeasurements(QVector<double>&) const;
 
 private:
