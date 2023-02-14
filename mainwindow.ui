@@ -178,7 +178,11 @@
              </widget>
             </item>
             <item row="6" column="1">
-             <widget class="QDoubleSpinBox" name="doubleSpinBoxCh1Setpoint"/>
+             <widget class="QDoubleSpinBox" name="doubleSpinBoxCh1Setpoint">
+              <property name="maximum">
+               <double>10000000.000000000000000</double>
+              </property>
+             </widget>
             </item>
             <item row="8" column="0">
              <widget class="QLabel" name="labelCh1P">
@@ -280,7 +284,11 @@
              </widget>
             </item>
             <item row="6" column="1">
-             <widget class="QDoubleSpinBox" name="doubleSpinBoxCh2Setpoint"/>
+             <widget class="QDoubleSpinBox" name="doubleSpinBoxCh2Setpoint">
+              <property name="maximum">
+               <double>10000000.000000000000000</double>
+              </property>
+             </widget>
             </item>
             <item row="8" column="0">
              <widget class="QLabel" name="labelCh2P">
@@ -456,6 +464,9 @@
           <bool>true</bool>
          </property>
         </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QWidget" name="widget" native="true"/>
        </item>
       </layout>
      </widget>

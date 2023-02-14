@@ -49,6 +49,7 @@ template<> void Parameter<bool>::setValueFromString(QString stringValue)
 PierceStat::PierceStat(QObject *parent) : QObject(parent)
 {
     serial = new QSerialPort();
+    timeout = 100;
     //Default settings
     baud = QSerialPort::Baud115200;
     dataBits = QSerialPort::Data8;
@@ -182,7 +183,6 @@ AbstractParameter* PierceStat::getParameter(QString parameterName)
 void PierceStat::setParameter(QString parameterName, QString stringValue)
 {
     serial->write((QString("$%1:%2\n").arg(parametersTable[parameterName]->getNumber()).arg(stringValue)).toUtf8());
-    serial->waitForReadyRead();
     QString response = getResponse();
     if(response.split(':')[1].trimmed() == "Y") {
         parametersTable[parameterName]->setValueFromString(stringValue);
@@ -198,17 +198,14 @@ AbstractParameter* PierceStat::getStoredParameter(QString parameterName)
 QString PierceStat::getResponse()
 {
     QByteArray buffer;
-    char receive;
-    if(serial->waitForReadyRead(100)) {
+    while(serial->waitForReadyRead(timeout)) {
         while(serial->bytesAvailable() > 0) {
-            serial->read(&receive, 1);
-            buffer.append(receive);
-            if(receive == '\n') {
+            buffer += serial->readAll();
+            if(buffer.contains('\n')) {
                 break;
             }
         }
     }
-
     return QString(buffer);
 }
 

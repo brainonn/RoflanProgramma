@@ -62,6 +62,7 @@ private:
     QByteArray receiveBuffer;
     QHash<QString, AbstractParameter*> parametersTable;
     QHash<QString, Command*> commandsTable;
+    int timeout;
 public:
     explicit PierceStat(QObject *parent = nullptr);
     ~PierceStat();

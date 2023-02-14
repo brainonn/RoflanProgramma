@@ -40,13 +40,11 @@ MainWindow::MainWindow(QWidget *parent) :
     prevTime = 0;
     prevFreq = 0;
     fixedPlot = false;
-    pollingInterval = 100;
+    pollingInterval = 1000;
     timeScale = 1000;
     channelLoads = QStringList({"Resistor", "Peltier"});
     channelModes = QStringList({"PID", "Constant Current"});
     channelSources = QStringList({"Temperature 1", "Temperature 2", "Temperature 3", "Temperature 4", "Frequency"});
-
-    elapsedTimer->start();
 
     ui->comboBoxChannelsCoop->addItems({"Independent", "Cooperative"});
     ui->comboBoxChannelsCoop->setCurrentIndex(0);
@@ -69,8 +67,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(timer,SIGNAL(timeout()),this,SLOT(getReadings()));
     connect(this,SIGNAL(updatePlots(QVector<double>&)),this, SLOT(on_updatePlots(QVector<double>&)));
-    //connect(ui->pushButtonCh1Enable, SIGNAL(clicked()), this, SLOT(on_channelEnable()));
-    //connect(ui->pushButtonCh1Enable, SIGNAL(clicked()), this, SLOT(on_channelEnable()));
+    connect(ui->pushButtonCh1Enable, SIGNAL(clicked()), this, SLOT(on_channelEnable()));
+    connect(ui->pushButtonCh2Enable, SIGNAL(clicked()), this, SLOT(on_channelEnable()));
     //connect(ui->comboBoxCh1Load, SIGNAL(currentIndexChanged(int)), this, SLOT(on_channelLoadChanged(int)));
     //connect(ui->comboBoxCh2Load, SIGNAL(currentIndexChanged(int)), this, SLOT(on_channelLoadChanged(int)));
     //connect(ui->comboBoxCh1Mode, SIGNAL(currentIndexChanged(int)), this, SLOT(on_channelModeChanged(int)));
@@ -110,13 +108,10 @@ void MainWindow::getReadings()
 
     emit updatePlots(res);
 
-    QVector<double> meas;
+    //QVector<double> meas;
 
-    meas.append(static_cast<Parameter<double>*>(pierceStat->getParameter("Meas. Heater Voltage"))->getValue());
-    emit updateMeasurements(meas);
-
-    //double temp = static_cast<Parameter<double>*>(pierceStat->getParameter("Temp1"))->getValue();
-    //ui->labelTemperature->setText(QString::number(temp));
+    //meas.append(static_cast<Parameter<double>*>(pierceStat->getParameter("Meas. Heater Voltage"))->getValue());
+    //emit updateMeasurements(meas);
 
     return;
 }
@@ -151,6 +146,7 @@ QSerialPort::Parity MainWindow::getCOMParity() const {
 //SLOTS
 void MainWindow::on_pushButtonAction_clicked()
 {
+    elapsedTimer->start();
     if (ui->pushButtonAction->text() == "Start") {
         foreach(QVector<double> v, *channelSourcesValues) {
             v.clear();
@@ -167,6 +163,18 @@ void MainWindow::on_pushButtonAction_clicked()
         ui->pushButtonAction->setText("Stop"); // Перевести кнопку в режим "Отключение"
         foreach(QLabel* l, plotLabels) {
             l->setVisible(true);
+        }
+        QSignalBlocker(ui->pushButtonCh1Enable);
+        if(static_cast<Parameter<bool>*>(pierceStat->getParameter("Ch1 On"))->getValue()) {
+            ui->pushButtonCh1Enable->setText("Disable");
+        } else {
+            ui->pushButtonCh1Enable->setText("Enable");
+        }
+        QSignalBlocker(ui->pushButtonCh2Enable);
+        if(static_cast<Parameter<bool>*>(pierceStat->getParameter("Ch2 On"))->getValue()) {
+            ui->pushButtonCh2Enable->setText("Disable");
+        } else {
+            ui->pushButtonCh2Enable->setText("Enable");
         }
         QSignalBlocker(ui->comboBoxCh1Load);
         if(static_cast<Parameter<bool>*>(pierceStat->getStoredParameter("Ch1 Peltier Load"))->getValue()) {
@@ -230,6 +238,9 @@ void MainWindow::on_pushButtonAction_clicked()
 
     } else {
         timer->stop();
+        foreach(QVector<double> v, *channelSourcesValues) {
+            v.clear();
+        }
         pierceStat->close(); // Закрыть открытый порт
         ui->pushButtonAction->setText("Start"); // Перевести кнопку в режим "Подключение"
         foreach(QLabel* l, plotLabels) {
@@ -396,7 +407,7 @@ void MainWindow::on_updatePlots(QVector<double>& values)
         (*channelSourcesValues)[i].append(values[i]);
     }
     ui->labelFreq->setText(QString("Time: %1 s Frequency: %2 Hz").arg(int(time / timeScale)).arg(values[4], 0,'g',7));
-    ui->labelTemperature->setText(QString("Temperature: %1").arg(values[ui->comboBoxPlotTemp->currentIndex()], 0,'g',7));
+    ui->labelTemperature->setText(QString("Temp1: %1 Temp2: %2 Temp3: %3 Temp4: %4").arg(values[0], 0,'g',7).arg(values[1], 0,'g',7).arg(values[2], 0,'g',7).arg(values[3], 0,'g',7));
     //if we have more than 1 point for frequency
     if((*channelSourcesValues)[4].size() > 1) {
         double d = timeScale * (values[4] - prevFreq) / (time - prevTime);
